@@ -6,6 +6,36 @@ Maybe this loads into mnesia repo so it is performant and because it is fixed si
 
 Load from wow-classic-items/data/json/data.json
 
+Data structure from source:
+
+itemId
+name
+icon
+class - item classification
+subclass - item subclassification
+sellPrice - price if selling to vendor in copper
+quality
+itemLevel
+requiredLevel
+slot
+createdBy (see recipe)
+tooltip
+itemLink
+vendorPrice - cost from vendor in copper
+contentPhase
+source
+uniqueName
+
+For recipe:
+
+amount - [min, max]
+requiredSkill
+category - the profession needed
+reagents - [{itemId, amount}] ingredients
+recipes - a list of recipes that train this
+
+## ItemClasses
+
 ## Professions
 
 Load from wow-classic-items/data/json/professions.json
@@ -14,6 +44,32 @@ Load from wow-classic-items/data/json/professions.json
 
 Derive from Item import from wow-classic-items/data/json/data.json
 Note that the recipe section is unreliable and item references only reference physical items that teach a recipe, and exclude trainers
+
+### Recipes
+
+General recipes
+
+id - generated
+item_id
+min_amount
+max_amount
+required_skill
+category
+
+### RecipesReagents
+
+Ingredients for a recipe
+
+recipe_id
+item_id
+amount
+
+### RecipesSources
+
+Links a recipe to an item, can have multiple recipe sources
+
+recipe_id
+item_id
 
 ## ItemsRecipes
 

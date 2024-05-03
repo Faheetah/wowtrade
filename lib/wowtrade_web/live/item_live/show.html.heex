@@ -1,0 +1,33 @@
+<div class="bg-neutral-800 p-4 space-y-2">
+  <div class="text-4xl"><%= @item.name %></div>
+
+  <div>
+    <%= @item.class %>
+    <%= if @item.subclass do %>
+      > <%= @item.subclass %>
+    <% end %>
+  </div>
+
+  <div>Item Level <%= @item.item_level %></div>
+
+  <div><%= @item.quality %></div>
+
+  <div>Sell Price: <%= @item.sell_price || "Can't Sell" %></div>
+  <div>Buy from Vendor: <%= @item.vendor_price || "Not Sold" %></div>
+
+  <%= if @item.recipes do %>
+  <div class="text-2xl">
+    Recipes
+  </div>
+  <% end %>
+
+  <div class="space-y-8">
+  <%= for recipe <- @item.recipes do %>
+    <.live_component
+      module={WowtradeWeb.ItemLive.RecipeComponent}
+      id={"recipe-#{recipe.id}"}
+      recipe={recipe}
+    />
+  <% end %>
+  </div>
+</div>

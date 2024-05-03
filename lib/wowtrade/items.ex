@@ -23,7 +23,7 @@ defmodule Wowtrade.Items do
   """
   def get_item!(item_id) do
     Repo.get_by!(Item, item_id: item_id)
-    |> Repo.preload([recipes: [recipe_reagents: :reagent]])
+    |> Repo.preload([recipes: [:item, :recipe_reagents]])
   end
 
   @doc """

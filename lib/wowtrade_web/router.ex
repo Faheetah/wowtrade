@@ -18,6 +18,8 @@ defmodule WowtradeWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+
+    live "/items/:id", ItemLive.Show, :show
   end
 
   # Other scopes may use custom stacks.

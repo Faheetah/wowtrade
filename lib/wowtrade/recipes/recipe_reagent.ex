@@ -7,7 +7,7 @@ defmodule Wowtrade.Recipes.RecipeReagent do
 
   schema "recipes_reagents" do
     belongs_to :recipe, Recipe
-    belongs_to :reagent, Item, references: :item_id, foreign_key: :item_id
+    belongs_to :item, Item, references: :item_id, foreign_key: :item_id
     field :amount, :integer
   end
 

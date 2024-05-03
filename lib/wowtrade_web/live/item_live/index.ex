@@ -10,6 +10,15 @@ defmodule WowtradeWeb.ItemLive.Index do
   end
 
   @impl true
+  def handle_params(%{"class" => class, "subclass" => subclass}, _url, socket) do
+    items = Items.get_items_for_category!(class, subclass)
+    {
+      :noreply,
+      assign(socket, :items, items)
+    }
+  end
+
+  @impl true
   def handle_params(params, _url, socket) do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end

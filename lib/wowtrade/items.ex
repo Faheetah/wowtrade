@@ -26,6 +26,10 @@ defmodule Wowtrade.Items do
     |> Repo.preload([recipes: [:item, :recipe_reagents]])
   end
 
+  def get_items_for_category!(class, subclass) do
+    Repo.all(from i in Item, where: i.class == ^class and i.subclass == ^subclass, order_by: [desc: i.item_level])
+  end
+
   @doc """
   Creates a item.
   """

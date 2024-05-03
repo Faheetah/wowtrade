@@ -42,10 +42,21 @@ defmodule Wowtrade.Prices do
   end
 
   def get_prices_for_recipe!(recipe) do
-    Enum.reduce(recipe.recipe_reagents, 0, fn reagent, acc ->
+    Enum.reduce(recipe.recipe_reagents, {:ok, 0}, fn reagent, {status, count} ->
       price = get_latest_price_for_item!(reagent.item_id)
-      lowest = find_lowest_price(Repo.preload(reagent, :item), price)
-      acc + (reagent.amount * lowest)
+      item = Repo.preload(reagent, :item)
+      lowest = find_lowest_price(item, price)
+
+      # this is getting so ugly but it is late in the day
+      if lowest != nil && status == :ok do
+        {:ok, count + (reagent.amount * lowest)}
+      else
+        if status == :ok do
+          {:error, "Could not find a price for #{item.item.name}"}
+        else
+          {status, count}
+        end
+      end
     end)
   end
 

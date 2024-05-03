@@ -20,9 +20,14 @@ defmodule WowtradeWeb.ItemLive.RecipeComponent do
   def render(assigns) do
     ~H"""
     <div class="ml-6 space-y-4">
-      <div>Total Cost: <%= @total %></div>
-      <%= if @price do %>
-      <div>Profit: <%= @price.price - @total %></div>
+      <%= if elem(@total, 0) == :ok do %>
+        <div>Total Cost: <%= elem(@total, 1) %></div>
+
+        <%= if @price do %>
+          <div>Profit: <%= @price.price - elem(@total, 1) %></div>
+        <% end %>
+      <% else %>
+        <div><%= elem(@total, 1) %></div>
       <% end %>
 
       <%= for reagent <- @recipe.recipe_reagents do %>

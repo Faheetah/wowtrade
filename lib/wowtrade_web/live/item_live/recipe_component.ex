@@ -2,13 +2,17 @@ defmodule WowtradeWeb.ItemLive.RecipeComponent do
   use WowtradeWeb, :live_component
 
   alias Wowtrade.Recipes
+  alias Wowtrade.Prices
 
   @impl true
   def update(assigns, socket) do
+    recipe = Recipes.get_recipe!(assigns.recipe.id)
     {
       :ok,
       socket
-      |> assign(:recipe, Recipes.get_recipe!(assigns.recipe.id))
+      |> assign(:recipe, recipe)
+      |> assign(:price, assigns.price)
+      |> assign(:total, Prices.get_prices_for_recipe!(recipe))
     }
   end
 
@@ -16,23 +20,17 @@ defmodule WowtradeWeb.ItemLive.RecipeComponent do
   def render(assigns) do
     ~H"""
     <div class="ml-6 space-y-4">
+      <div>Total Cost: <%= @total %></div>
+      <%= if @price do %>
+      <div>Profit: <%= @price.price - @total %></div>
+      <% end %>
+
       <%= for reagent <- @recipe.recipe_reagents do %>
-        <li class="text-lg">
-          <%= reagent.amount %>x
-          <.link class="underline" navigate={"https://www.wowhead.com/wotlk/item=#{reagent.item.item_id}"}>
-            <%= reagent.item.name %>
-          </.link>
-
-          <input type="text" class="ml-4 border-b border-neutral-500 bg-neutral-900 h-6 w-16" />
-        </li>
-
-        <%= for recipe <- reagent.item.recipes do %>
-          <.live_component
-            module={WowtradeWeb.ItemLive.RecipeComponent}
-            id={"recipe-#{recipe.id}"}
-            recipe={recipe}
-          />
-        <% end %>
+        <.live_component
+          module={WowtradeWeb.ItemLive.ItemComponent}
+          id={"item-#{reagent.item.id}"}
+          reagent={reagent}
+        />
       <% end %>
     </div>
     """

@@ -1,5 +1,19 @@
-<div class="bg-neutral-800 p-4 space-y-2">
-  <div class="text-4xl"><%= @item.name %></div>
+<div class="bg-neutral-800 p-4">
+  <div class="text-4xl mb-2">
+    <%= @item.name %>
+
+    <form class="inline-block" phx-submit="update_price">
+      <%= if @price do %>
+        <input name="price" type="text" value={Map.get(@price, :price)} class="ml-4 border-b border-neutral-500 bg-neutral-900 h-5 w-24" />
+      <% else %>
+        <input name="price" type="text" class="ml-4 border-b border-neutral-500 bg-neutral-900 h-5 w-24" />
+      <% end %>
+      <input name="item_id" type="hidden" value={@item.item_id} />
+      <button class="hover:text-green-400" type="submit">
+        <.icon name="hero-check" />
+      </button>
+    </form>
+  </div>
 
   <div>
     <%= @item.class %>
@@ -16,18 +30,22 @@
   <div>Buy from Vendor: <%= @item.vendor_price || "Not Sold" %></div>
 
   <%= if @item.recipes do %>
-  <div class="text-2xl">
+  <div class="text-2xl mt-8">
     Recipes
   </div>
   <% end %>
 
   <div class="space-y-8">
   <%= for recipe <- @item.recipes do %>
-    <.live_component
-      module={WowtradeWeb.ItemLive.RecipeComponent}
-      id={"recipe-#{recipe.id}"}
-      recipe={recipe}
-    />
+    <div>
+      <div class="text-2xl ml-6 mb-2 mt-4"><%= @item.name %></div>
+      <.live_component
+        module={WowtradeWeb.ItemLive.RecipeComponent}
+        id={"recipe-#{recipe.id}"}
+        recipe={recipe}
+        price={@price}
+      />
+    </div>
   <% end %>
   </div>
 </div>

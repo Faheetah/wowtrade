@@ -7,16 +7,14 @@ defmodule Wowtrade.Recipes.RecipeReagent do
 
   schema "recipes_reagents" do
     belongs_to :recipe, Recipe
-    belongs_to :item, Item
+    belongs_to :reagent, Item, references: :item_id, foreign_key: :item_id
     field :amount, :integer
-
-    timestamps(type: :utc_datetime)
   end
 
-  @doc false
+  # @doc false
   def changeset(recipe_reagent, attrs) do
     recipe_reagent
-    |> cast(attrs, [:amount])
-    |> validate_required([:amount])
+    |> cast(attrs, [:amount, :recipe_id, :item_id])
+    |> unique_constraint([:item_id, :recipe_id])
   end
 end

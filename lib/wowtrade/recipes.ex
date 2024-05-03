@@ -18,7 +18,9 @@ defmodule Wowtrade.Recipes do
 
   """
   def list_recipes do
-    Repo.all(Recipe)
+    Recipe
+    |> preload([:reagents, :item])
+    |> Repo.all()
   end
 
   @doc """

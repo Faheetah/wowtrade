@@ -10,44 +10,24 @@ defmodule Wowtrade.Items do
 
   @doc """
   Returns the list of items.
-
-  ## Examples
-
-      iex> list_items()
-      [%Item{}, ...]
-
   """
   def list_items do
     Repo.all(Item)
+    |> Repo.preload(:recipes)
   end
 
   @doc """
   Gets a single item.
 
   Raises `Ecto.NoResultsError` if the Item does not exist.
-
-  ## Examples
-
-      iex> get_item!(123)
-      %Item{}
-
-      iex> get_item!(456)
-      ** (Ecto.NoResultsError)
-
   """
-  def get_item!(id), do: Repo.get!(Item, id)
+  def get_item!(item_id) do
+    Repo.get_by!(Item, item_id: item_id)
+    |> Repo.preload([recipes: [recipe_reagents: :reagent]])
+  end
 
   @doc """
   Creates a item.
-
-  ## Examples
-
-      iex> create_item(%{field: value})
-      {:ok, %Item{}}
-
-      iex> create_item(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
   """
   def create_item(attrs \\ %{}) do
     %Item{}

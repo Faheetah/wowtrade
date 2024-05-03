@@ -8,8 +8,8 @@ defmodule Wowtrade.Repo.Migrations.CreateRecipes do
       add :max_amount, :integer
       add :required_skill, :integer
       add :category, :string
-
-      timestamps(type: :utc_datetime)
     end
+
+    create unique_index(:recipes, :item_id)
   end
 end

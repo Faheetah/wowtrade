@@ -17,8 +17,8 @@ defmodule Wowtrade.Repo.Migrations.CreateItems do
       add :vendor_price, :integer
       add :content_phase, :integer
       add :unique_name, :string
-
-      timestamps(type: :utc_datetime)
     end
+
+    create unique_index(:items, [:item_id])
   end
 end

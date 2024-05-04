@@ -35,7 +35,7 @@ defmodule WowtradeWeb.ItemLive.RecipeComponent do
       <%= for reagent <- @recipe.recipe_reagents do %>
         <.live_component
           module={WowtradeWeb.ItemLive.ItemComponent}
-          id={"item-#{reagent.item.id}"}
+          id={"item-#{@recipe.id}-#{reagent.id}-#{:rand.uniform(1000000)}"}
           reagent={reagent}
         />
       <% end %>

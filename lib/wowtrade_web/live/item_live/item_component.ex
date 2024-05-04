@@ -43,12 +43,14 @@ defmodule WowtradeWeb.ItemLive.ItemComponent do
         </li>
 
         <%= for recipe <- @reagent.item.recipes do %>
-          <.live_component
-            module={WowtradeWeb.ItemLive.RecipeComponent}
-            id={"recipe-#{recipe.id}"}
-            recipe={recipe}
-            price={@price}
-          />
+          <%= if @reagent.item.subclass != "Elemental" do %>
+            <.live_component
+              module={WowtradeWeb.ItemLive.RecipeComponent}
+              id={"recipe-#{recipe.id}-#{@reagent.id}"}
+              recipe={recipe}
+              price={@price}
+            />
+          <% end %>
         <% end %>
     </div>
     """

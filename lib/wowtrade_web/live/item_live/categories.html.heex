@@ -1,0 +1,7 @@
+<div>
+  <%= for item <- @items do %>
+  <div>
+  <.link patch={~p"/items/#{item.item_id}"} class="hover:underline"><%= item.name %> <span class="text-neutral-600 ml-1">i<%= item.item_level %></span></.link>
+  </div>
+  <% end %>
+</div>

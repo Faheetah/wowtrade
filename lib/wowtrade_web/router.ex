@@ -19,8 +19,9 @@ defmodule WowtradeWeb.Router do
 
     get "/", PageController, :home
 
-    live "/categories/:class", ItemLive.Index, :index
-    live "/categories/:class/:subclass", ItemLive.Index, :index
+    live "/categories", ItemLive.Index, :index
+    live "/categories/:class", ItemLive.Categories, :index
+    live "/categories/:class/:subclass", ItemLive.Categories, :index
     live "/items/:id", ItemLive.Show, :show
   end
 

@@ -1,7 +1,9 @@
 <div>
-  <%= for item <- @items do %>
+  <%= for category <- @categories do %>
   <div>
-  <.link patch={~p"/items/#{item.item_id}"} class="hover:underline"><%= item.name %> <span class="text-neutral-600 ml-1">i<%= item.item_level %></span></.link>
+    <.link class="hover:underline" navigate={"/categories/#{category.class}/#{category.subclass}"}>
+      <%= category.class %> > <%= category.subclass %>
+    </.link>
   </div>
   <% end %>
 </div>

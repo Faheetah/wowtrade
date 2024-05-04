@@ -7,6 +7,7 @@ defmodule Wowtrade.Items do
   alias Wowtrade.Repo
 
   alias Wowtrade.Items.Item
+  alias Wowtrade.Items.Category
 
   @doc """
   Returns the list of items.
@@ -28,6 +29,16 @@ defmodule Wowtrade.Items do
 
   def get_items_for_category!(class, subclass) do
     Repo.all(from i in Item, where: i.class == ^class and i.subclass == ^subclass, order_by: [desc: i.item_level])
+  end
+
+  def create_category(attrs \\ %{}) do
+    %Category{}
+    |> Category.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def list_categories do
+    Repo.all(from c in Category, order_by: [asc: :class, asc: :subclass])
   end
 
   @doc """

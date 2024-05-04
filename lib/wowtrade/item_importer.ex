@@ -26,9 +26,19 @@ defmodule Wowtrade.ItemImporter do
   defp filter_result(_), do: false
 
   defp create_item(item) do
+    Items.create_category(%{
+      class: item["class"],
+      subclass: item["subclass"],
+      class_lower: maybe_downcase(item["class"]),
+      subclass_lower: maybe_downcase(item["subclass"])
+    })
+
     Enum.into(item, %{}, fn {k, v} -> {Macro.underscore(k), v} end)
     |> Items.create_item()
   end
+
+  defp maybe_downcase(nil), do: nil
+  defp maybe_downcase(name), do: String.downcase(name)
 
   defp create_recipes(%{"itemId" => item_id, "createdBy" => recipes}) do
     Enum.map(recipes, fn r -> create_recipe(r, item_id) end)

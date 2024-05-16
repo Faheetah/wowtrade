@@ -9,7 +9,5 @@ defmodule Wowtrade.Repo.Migrations.CreateRecipes do
       add :required_skill, :integer
       add :category, :string
     end
-
-    create unique_index(:recipes, :item_id)
   end
 end

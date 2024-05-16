@@ -12,7 +12,6 @@ defmodule WowtradeWeb.ItemLive.Show do
     }
   end
 
-  @impl true
   def update(assigns, socket) do
     {
       :ok,
@@ -32,8 +31,9 @@ defmodule WowtradeWeb.ItemLive.Show do
     {
       :noreply,
       socket
-      |> assign(:item, Items.get_item!(item_id))
+      |> assign(:item, Items.get_or_create_item!(item_id))
       |> assign(:price, Prices.get_latest_price_for_item!(item_id))
+      |> assign(:prices, Prices.list_prices_for_item(item_id))
     }
   end
 end

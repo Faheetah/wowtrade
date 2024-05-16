@@ -2,7 +2,6 @@ defmodule WowtradeWeb.ItemLive.Categories do
   use WowtradeWeb, :live_view
 
   alias Wowtrade.Items
-  alias Wowtrade.Items.Item
 
   @impl true
   def mount(_params, _session, socket) do

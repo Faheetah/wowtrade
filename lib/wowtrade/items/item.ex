@@ -25,7 +25,7 @@ defmodule Wowtrade.Items.Item do
   def changeset(item, attrs) do
     item
     |> cast(attrs, [:item_id, :name, :class, :subclass, :sell_price, :quality, :item_level, :required_level, :slot, :item_link, :vendor_price, :content_phase, :unique_name])
-    |> validate_required([:item_id, :name, :class, :item_link, :unique_name])
+    |> validate_required([:item_id, :name, :class])
     |> unique_constraint([:item_id])
   end
 end

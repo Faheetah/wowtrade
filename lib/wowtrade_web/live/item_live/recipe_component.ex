@@ -21,11 +21,11 @@ defmodule WowtradeWeb.ItemLive.RecipeComponent do
     ~H"""
     <div class="ml-6 space-y-4">
       <div>
-      <%= if elem(@total, 0) == :ok do %>
+      <%= if elem(@total, 0) == :ok && elem(@total, 1) > 0 do %>
         <div>Total cost per item: <%= floor(elem(@total, 1) / ((@recipe.min_amount + @recipe.max_amount) / 2)) %></div>
 
         <%= if @price do %>
-          <div>Profit per item: <%= floor(@price.price - (elem(@total, 1) / ((@recipe.min_amount + @recipe.max_amount) / 2))) %></div>
+          <div>Profit per item: <%= floor(@price.buyout - (elem(@total, 1) / ((@recipe.min_amount + @recipe.max_amount) / 2))) %></div>
         <% end %>
       <% else %>
         <div><%= elem(@total, 1) %></div>

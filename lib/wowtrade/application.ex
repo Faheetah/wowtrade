@@ -17,7 +17,9 @@ defmodule Wowtrade.Application do
       # Start a worker by calling: Wowtrade.Worker.start_link(arg)
       # {Wowtrade.Worker, arg},
       # Start to serve requests, typically the last entry
-      WowtradeWeb.Endpoint
+      WowtradeWeb.Endpoint,
+      # Rate limit module
+      Wowtrade.RateLimit
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

@@ -17,28 +17,23 @@ defmodule Wowtrade.Prices do
       [%Price{}, ...]
 
   """
-  def list_prices do
-    Repo.all(Price)
+  def list_prices_for_item(item_id) do
+    Repo.all(from p in Price, where: p.item_id == ^item_id)
   end
 
   @doc """
   Gets a single price.
 
   Raises `Ecto.NoResultsError` if the Price does not exist.
-
-  ## Examples
-
-      iex> get_price!(123)
-      %Price{}
-
-      iex> get_price!(456)
-      ** (Ecto.NoResultsError)
-
   """
   def get_price!(id), do: Repo.get!(Price, id)
 
   def get_latest_price_for_item!(item_id) do
-    Repo.one(from p in Price, where: p.item_id == ^item_id, order_by: [desc: p.inserted_at], limit: 1)
+    now =
+      DateTime.now!("Etc/UTC")
+      |> DateTime.add(-1, :day)
+
+    Repo.one(from p in Price, where: p.item_id == ^item_id, where: p.inserted_at >= ^now, order_by: [asc: p.buyout], limit: 1)
   end
 
   def get_prices_for_recipe!(recipe) do
@@ -63,7 +58,7 @@ defmodule Wowtrade.Prices do
   defp find_lowest_price(nil, %{price: price}), do: price
   defp find_lowest_price(%{item: %{vendor_price: vendor_price}}, nil), do: vendor_price
   defp find_lowest_price(%{item: %{vendor_price: vendor_price}}, %{price: price}) when vendor_price < price , do: vendor_price
-  defp find_lowest_price(%{item: %{vendor_price: vendor_price}}, %{price: price}), do: price
+  defp find_lowest_price(%{item: %{vendor_price: _vendor_price}}, %{price: price}), do: price
   defp find_lowest_price(_item, _price), do: nil
 
   @doc """

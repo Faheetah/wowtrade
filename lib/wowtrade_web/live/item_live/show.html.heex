@@ -26,8 +26,31 @@
 
   <div><%= @item.quality %></div>
 
-  <div>Sell Price: <%= @item.sell_price || "Can't Sell" %></div>
-  <div>Buy from Vendor: <%= @item.vendor_price || "Not Sold" %></div>
+  <div>
+    Sell Price:
+    <%= if @item.sell_price do %>
+    <.price price={@item.sell_price} />
+    <% else %>
+      Can't Sell
+    <% end %>
+  </div>
+  <div>
+    Buy from Vendor:
+    <%= if @item.sell_price do %>
+      <.price price={@item.vendor_price} />
+    <% else %>
+      Not Sold
+    <% end %>
+  </div>
+
+  <div>
+  <div class="text-xl">Latest Prices</div>
+  <%= for price <- @prices do %>
+  <li>
+  <%= price.inserted_at %> - <%= price.quantity %> @ BO <.price price={price.buyout} /> (Bid <.price price={price.bid} />)
+  </li>
+  <% end %>
+  </div>
 
   <%= if @item.recipes do %>
   <div class="text-2xl mt-8">

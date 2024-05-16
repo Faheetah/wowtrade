@@ -1,7 +1,6 @@
 defmodule WowtradeWeb.ItemLive.ItemComponent do
   use WowtradeWeb, :live_component
 
-  alias Wowtrade.Recipes
   alias Wowtrade.Prices
 
   @impl true
@@ -24,13 +23,13 @@ defmodule WowtradeWeb.ItemLive.ItemComponent do
             <%= @reagent.item.name %>
           </.link>
           <%= if @reagent.item.vendor_price do %>
-          <span class="text-neutral-400 ml-1"><.icon name="hero-currency-dollar" /><%= @reagent.item.vendor_price %></span>
+          <span class="text-neutral-400 ml-1"><.price price={@reagent.item.vendor_price} /></span>
           <% end %>
 
           <span>
             <form class="inline-block" phx-submit="update_price">
             <%= if @price do %>
-              <input name="price" type="text" value={Map.get(@price, :price)} class="ml-4 border-b border-neutral-500 bg-neutral-900 h-5 w-24 text-xs" />
+              <input name="price" type="text" value={Map.get(@price, :buyout)} class="ml-4 border-b border-neutral-500 bg-neutral-900 h-5 w-24 text-xs" />
             <% else %>
               <input name="price" type="text" class="ml-4 border-b border-neutral-500 bg-neutral-900 h-5 w-24 text-xs" />
             <% end %>

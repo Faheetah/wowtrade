@@ -22,8 +22,19 @@ defmodule Wowtrade.Items do
 
   Raises `Ecto.NoResultsError` if the Item does not exist.
   """
-  def get_item!(item_id) do
-    Repo.get_by!(Item, item_id: item_id)
+  def get_or_create_item!(item_id) do
+    case get_item(item_id) do
+      nil ->
+        {parsed_item_id, _} = Integer.parse(item_id)
+        Wowtrade.Sync.Blizzard.get_item(parsed_item_id)
+        |> Repo.preload([recipes: [:item, :recipe_reagents]])
+
+      item -> item
+    end
+  end
+
+  def get_item(item_id) do
+    Repo.get_by(Item, item_id: item_id)
     |> Repo.preload([recipes: [:item, :recipe_reagents]])
   end
 

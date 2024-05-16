@@ -19,8 +19,7 @@ defmodule Wowtrade.Recipes.Recipe do
   def changeset(recipe, attrs) do
     recipe
     |> cast(attrs, [:item_id, :min_amount, :max_amount, :required_skill, :category])
-    |> validate_required([:item_id, :min_amount, :max_amount, :required_skill, :category])
+    |> validate_required([:item_id, :min_amount, :max_amount])
     |> cast_assoc(:recipe_reagents)
-    |> unique_constraint([:item_id])
   end
 end

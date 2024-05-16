@@ -19,6 +19,18 @@ defmodule WowtradeWeb.CoreComponents do
   alias Phoenix.LiveView.JS
   import WowtradeWeb.Gettext
 
+  attr :price, :integer, required: true
+
+  def price(assigns) do
+    ~H"""
+    <span>
+      <span class="text-yellow-200"><%= floor(@price / 10000) %>g</span>
+      <span class="text-stone-400"><%= floor(Integer.mod(@price, 10000) / 100) %>s</span>
+      <span class="text-orange-200"><%= Integer.mod(@price, 100) %>c</span>
+    </span>
+    """
+  end
+
   @doc """
   Renders a modal.
 

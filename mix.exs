@@ -50,7 +50,9 @@ defmodule Wowtrade.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
-      {:plug_cowboy, "~> 2.5"}
+      {:plug_cowboy, "~> 2.5"},
+      {:sweet_xml, "~> 0.7.4"},
+      {:httpoison, "~> 2.0"}
     ]
   end
 

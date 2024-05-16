@@ -9,12 +9,14 @@ defmodule Wowtrade.Recipes.RecipeReagent do
     belongs_to :recipe, Recipe
     belongs_to :item, Item, references: :item_id, foreign_key: :item_id
     field :amount, :integer
+    field :spell_id, :integer
   end
 
   # @doc false
   def changeset(recipe_reagent, attrs) do
     recipe_reagent
-    |> cast(attrs, [:amount, :recipe_id, :item_id])
-    |> unique_constraint([:item_id, :recipe_id])
+    |> cast(attrs, [:amount, :recipe_id, :item_id, :spell_id])
+    |> unique_constraint([:item_id, :spell_id])
+    |> foreign_key_constraint(:item_id)
   end
 end

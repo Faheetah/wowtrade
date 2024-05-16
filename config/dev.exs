@@ -1,5 +1,8 @@
 import Config
 
+config :wowtrade, Wowtrade.Sync.Blizzard,
+  access_token: System.get_env("ACCESS_TOKEN")
+
 # Configure your database
 config :wowtrade, Wowtrade.Repo,
   username: "postgres",
